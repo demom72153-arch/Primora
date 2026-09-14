@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar conta | Primora</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">Primora</a>
+    <nav><a href="/login">Entrar</a></nav>
+</header>
+
+<main class="form-container">
+    <h1>Criar conta</h1>
+    <p class="subtitulo">Faça parte da comunidade Primora.</p>
+
+    <% if (erro) { %>
+        <div class="erro"><%= erro %></div>
+    <% } %>
+
+    <form action="/cadastro" method="POST">
+        <label>Nome</label>
+        <input type="text" name="nome" placeholder="Seu nome" required>
+
+        <label>E-mail</label>
+        <input type="email" name="email" placeholder="seu@email.com" required>
+
+        <label>Senha</label>
+        <input type="password" name="senha" placeholder="Mínimo de 6 caracteres" minlength="6" required>
+
+        <label>Tipo de conta</label>
+        <select name="tipo">
+            <option value="assinante">Quero acompanhar criadores</option>
+            <option value="criador">Quero ser criador</option>
+        </select>
+
+        <button class="btn" type="submit">Criar conta</button>
+    </form>
+
+    <p class="rodape-form">Já possui uma conta? <a href="/login">Entrar</a></p>
+</main>
+</body>
+</html>

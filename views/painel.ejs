@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel | Primora</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">Primora</a>
+    <nav>
+        <a href="/">Início</a>
+        <a href="/logout">Sair</a>
+    </nav>
+</header>
+
+<main class="painel">
+    <section class="painel-topo">
+        <div>
+            <span class="tag">MEU PAINEL</span>
+            <h1>Olá, <%= usuario.nome %>!</h1>
+            <p>Gerencie seu perfil e suas publicações.</p>
+        </div>
+    </section>
+
+    <div class="painel-grid">
+        <section class="box">
+            <h2>Meu perfil</h2>
+
+            <form action="/perfil" method="POST" enctype="multipart/form-data">
+                <label>Nome</label>
+                <input type="text" name="nome" value="<%= usuario.nome %>" required>
+
+                <label>Biografia</label>
+                <textarea name="bio" rows="4" placeholder="Fale um pouco sobre você..."><%= usuario.bio || "" %></textarea>
+
+                <label>Tipo de conta</label>
+                <select name="tipo">
+                    <option value="assinante" <%= usuario.tipo === "assinante" ? "selected" : "" %>>Assinante</option>
+                    <option value="criador" <%= usuario.tipo === "criador" ? "selected" : "" %>>Criador</option>
+                </select>
+
+                <label>Foto de perfil</label>
+                <input type="file" name="avatar" accept="image/*">
+
+                <button class="btn" type="submit">Salvar perfil</button>
+            </form>
+        </section>
+
+        <section class="box">
+            <h2>Nova publicação</h2>
+
+            <form action="/publicar" method="POST" enctype="multipart/form-data">
+                <label>Título</label>
+                <input type="text" name="titulo" placeholder="Título da publicação" required>
+
+                <label>Descrição</label>
+                <textarea name="descricao" rows="5" placeholder="Escreva uma descrição..."></textarea>
+
+                <label>Imagem</label>
+                <input type="file" name="imagem" accept="image/*">
+
+                <label class="check">
+                    <input type="checkbox" name="exclusivo">
+                    Publicação exclusiva
+                </label>
+
+                <button class="btn" type="submit">Publicar</button>
+            </form>
+        </section>
+    </div>
+
+    <section class="box publicacoes">
+        <h2>Minhas publicações</h2>
+
+        <% if (posts.length === 0) { %>
+            <p>Você ainda não publicou nada.</p>
+        <% } %>
+
+        <% posts.forEach(post => { %>
+            <div class="post-linha">
+                <div>
+                    <strong><%= post.titulo %></strong>
+                    <span><%= post.exclusivo ? "Exclusivo" : "Público" %></span>
+                </div>
+
+                <form action="/excluir-post/<%= post.id %>" method="POST">
+                    <button class="btn-perigo" type="submit">Excluir</button>
+                </form>
+            </div>
+        <% }); %>
+    </section>
+</main>
+</body>
+</html>

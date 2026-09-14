@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primora</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">Primora</a>
+    <nav>
+        <a href="/">Início</a>
+
+        <% if (usuario) { %>
+            <a href="/painel">Meu painel</a>
+            <a href="/logout">Sair</a>
+        <% } else { %>
+            <a href="/login">Entrar</a>
+            <a class="btn pequeno" href="/cadastro">Criar conta</a>
+        <% } %>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <div>
+            <span class="tag">PLATAFORMA DE CRIADORES</span>
+            <h1>Compartilhe seu talento.<br><strong>Construa sua comunidade.</strong></h1>
+            <p>O Primora conecta criadores e pessoas interessadas em conteúdo exclusivo, comunidades e novas experiências.</p>
+
+            <div class="acoes">
+                <a class="btn" href="/cadastro">Começar agora</a>
+                <a class="btn secundario" href="/login">Entrar</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="conteudo">
+        <div class="titulo-secao">
+            <h2>Publicações recentes</h2>
+            <p>Conheça os conteúdos compartilhados pela comunidade.</p>
+        </div>
+
+        <div class="grid">
+            <% if (posts.length === 0) { %>
+                <div class="vazio">
+                    <h3>Nenhuma publicação ainda</h3>
+                    <p>Crie sua conta e seja um dos primeiros criadores da Primora.</p>
+                </div>
+            <% } %>
+
+            <% posts.forEach(post => { %>
+                <article class="card">
+                    <% if (post.imagem) { %>
+                        <img src="<%= post.imagem %>" alt="<%= post.titulo %>">
+                    <% } else { %>
+                        <div class="imagem-vazia">PRIMORA</div>
+                    <% } %>
+
+                    <div class="card-conteudo">
+                        <% if (post.exclusivo) { %>
+                            <span class="exclusivo">EXCLUSIVO</span>
+                        <% } else { %>
+                            <span class="publico">PÚBLICO</span>
+                        <% } %>
+
+                        <h3><%= post.titulo %></h3>
+                        <p><%= post.descricao %></p>
+                        <a href="/criador/<%= post.usuario_id %>">Por <%= post.nome %></a>
+                    </div>
+                </article>
+            <% }); %>
+        </div>
+    </section>
+</main>
+</body>
+</html>

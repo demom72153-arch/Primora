@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= criador.nome %> | Primora</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <a class="logo" href="/">Primora</a>
+    <nav><a href="/">Início</a></nav>
+</header>
+
+<main class="criador-pagina">
+    <section class="perfil-capa">
+        <% if (criador.avatar) { %>
+            <img class="avatar" src="<%= criador.avatar %>" alt="Foto de perfil">
+        <% } else { %>
+            <div class="avatar sem-avatar"><%= criador.nome.charAt(0).toUpperCase() %></div>
+        <% } %>
+
+        <h1><%= criador.nome %></h1>
+
+        <% if (criador.tipo === "criador") { %>
+            <span class="tag">CRIADOR</span>
+        <% } %>
+
+        <p><%= criador.bio || "Este criador ainda não adicionou uma biografia." %></p>
+    </section>
+
+    <section class="conteudo">
+        <h2>Publicações</h2>
+
+        <div class="grid">
+            <% posts.forEach(post => { %>
+                <article class="card">
+                    <% if (post.imagem) { %>
+                        <img src="<%= post.imagem %>" alt="<%= post.titulo %>">
+                    <% } else { %>
+                        <div class="imagem-vazia">PRIMORA</div>
+                    <% } %>
+
+                    <div class="card-conteudo">
+                        <h3><%= post.titulo %></h3>
+                        <p><%= post.descricao %></p>
+                    </div>
+                </article>
+            <% }); %>
+        </div>
+    </section>
+</main>
+</body>
+</html>
